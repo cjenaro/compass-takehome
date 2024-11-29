@@ -1,15 +1,334 @@
-body {
-  font-family: 'Roboto', sans-serif;
-  display: flex;
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
-  background-color: #f5f5f5;
+:root {
+    /* Image Slider Variables */
+    --image-slider-height: 190px;
+    --nav-button-padding: 8px;
+    --nav-button-icon-size: 24px;
+    --nav-button-opacity-hover: 1;
+    --nav-button-opacity: 0;
+    --nav-button-bg-prev: linear-gradient(-90deg, transparent, #000000);
+    --nav-button-bg-next: linear-gradient(90deg, transparent, #000000);
+    --indicator-size: 8px;
+    --indicator-gap: 4px;
+    --indicator-bg: rgba(255, 255, 255, 0.5);
+    --indicator-active-bg: white;
+    --agent-font-size: 12px;
+    --agent-color: rgba(255, 255, 255, 0.8);
+    --agent-margin-bottom: 4px;
+    --agent-margin-left: 4px;
+    --image-transition: opacity 0.3s ease-in-out;
+    --nav-button-transition: opacity 0.2s ease;
+
+    /* Listing Card */
+    --card-border-radius: 5px;
+    --card-background-color: hsla(0, 0%, 100%, 1); /* White */
+    --card-box-shadow: 0 2px 4px hsla(0, 0%, 0%, 0.1);
+    --card-max-width: 311px;
+
+    /* Details Container */
+    --details-padding: 17px 16px 16px;
+
+    /* Price Container */
+    --price-gap: 8px;
+    --price-margin-bottom: 18px;
+    --price-font-size: 20px;
+    --price-font-weight: bold;
+    --price-color: hsla(0, 0%, 0%, 1); /* Black */
+
+    /* New Match Badge */
+    --badge-color-notice-bg: hsla(154, 66%, 40%, 1); /* Green */
+    --badge-color-notice-text: hsla(0, 0%, 100%, 1); /* White */
+    --badge-color-info-bg: hsla(217, 71%, 53%, 1); /* Blue */
+    --badge-color-info-text: hsla(0, 0%, 100%, 1); /* White */
+    --badge-color-warn-bg: hsla(45, 95%, 51%, 1); /* Yellow */
+    --badge-color-warn-text: hsla(0, 0%, 0%, 1); /* Black */
+    --badge-color-error-bg: hsla(14, 85%, 57%, 1); /* Red */
+    --badge-color-error-text: hsla(0, 0%, 100%, 1); /* White */
+
+    --badge-bg-color: var(--badge-color-notice-bg);
+    --badge-color: var(--badge-color-notice-text);
+    --badge-text-transform: uppercase;
+    --badge-padding: 2px 8px;
+    --badge-border-radius: 15px;
+    --badge-font-size: 11px;
+    --badge-font-weight: 500;
+
+    /* Listing Properties */
+    --listing-gap: 8px;
+    --listing-font-size: 17px;
+    --listing-color: hsla(0, 0%, 0%, 0.8); /* Black, 80% opacity */
+
+    /* Address */
+    --address-font-size: 14px;
+    --address-color: hsla(218, 8%, 46%, 1); /* Gray */
+
+    /* Actions */
+    --actions-margin-left: 8px;
+
+    /* Action Button */
+    --action-button-icon-color: hsla(218, 8%, 46%, 1); /* Gray */
+    --action-button-icon-size: 24px;
+
+    /* Share Button */
+    --share-button-position: absolute;
+    --share-button-top: 8px;
+    --share-button-right: 8px;
+    --share-button-bg-color: hsla(0, 0%, 0%, 0.5); /* Black, 50% opacity */
+    --share-button-border-radius: 50%;
+    --share-button-width: 40px;
+    --share-button-height: 40px;
+    --share-button-padding: 10px;
+    --share-button-color: hsla(0, 0%, 100%, 1); /* White */
+    --share-button-cursor: pointer;
+    --share-button-z-index: 20;
+    --share-button-margin: 0;
 }
 
-.listingCard {
-  border: 1px solid gray;
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
+body {
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    min-height: 100vh;
+    width: 100vw;
+    margin: 0;
+    background-color: #f5f5f5;
+}
+
+#root {
+    width: 100%;
+    display: grid;
+    place-items: center;
+    padding: 2rem;
+}
+
+.calendar-container {
+    display: grid;
+    place-items: center;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1rem;
+    width: 100%;
+}
+
+/* Start of Listing Card */
+.listing-card {
+    position: relative;
+    border-radius: var(--card-border-radius);
+    overflow: hidden;
+    background-color: var(--card-background-color);
+    box-shadow: var(--card-box-shadow);
+    max-width: var(--card-max-width);
+    width: 100%;
+}
+
+.listing-card.no-image {
+    --share-button-position: static;
+    --share-button-margin: 4px 4px 4px auto;
+}
+/* End of Listing Card */
+
+/* Start of Details Container */
+.details-container {
+    padding: var(--details-padding);
+}
+/* End of Details Container */
+
+/* Start of Price Container */
+.price-container {
+    display: flex;
+    align-items: center;
+    gap: var(--price-gap);
+    margin-bottom: var(--price-margin-bottom);
+}
+
+.price {
+    font-size: var(--price-font-size);
+    font-weight: var(--price-font-weight);
+    color: var(--price-color);
+}
+/* End of Price Container */
+
+/* Start of New Match Badge */
+.badge {
+    background-color: var(--badge-bg-color);
+    text-transform: var(--badge-text-transform);
+    color: var(--badge-color);
+    padding: var(--badge-padding);
+    border-radius: var(--badge-border-radius);
+    font-size: var(--badge-font-size);
+    font-weight: var(--badge-font-weight);
+}
+/* End of New Match Badge */
+
+/* Start of Listing Properties */
+.listing-properties {
+    margin: 0 0 4px;
+    display: flex;
+    gap: var(--listing-gap);
+    font-size: var(--listing-font-size);
+    color: var(--listing-color);
+}
+/* End of Listing Properties */
+
+/* Start of Address */
+.address {
+    font-size: var(--address-font-size);
+    color: var(--address-color);
+}
+/* End of Address */
+
+/* Start of Actions */
+.actions {
+    margin-left: var(--actions-margin-left);
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+.action-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.action-button > svg {
+    color: var(--action-button-icon-color);
+    height: var(--action-button-icon-size);
+    width: var(--action-button-icon-size);
+}
+/* End of Actions */
+
+/* Start of Share Button */
+.share-button {
+    position: var(--share-button-position);
+    top: var(--share-button-top);
+    right: var(--share-button-right);
+    background-color: var(--share-button-bg-color);
+    border-radius: var(--share-button-border-radius);
+    width: var(--share-button-width);
+    height: var(--share-button-height);
+    padding: var(--share-button-padding);
+    color: var(--share-button-color);
+    cursor: var(--share-button-cursor);
+    z-index: var(--share-button-z-index);
+    margin: var(--share-button-margin);
+    border: 0;
+    display: block;
+}
+/* End of Share Button */
+
+/* Start Image Slider */
+
+.image-slider {
+    position: relative;
+}
+
+.image-wrapper {
+    height: var(--image-slider-height);
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.image {
+    transition: var(--image-transition);
+    position: absolute;
+    inset: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    opacity: 0;
+}
+
+.image.visible {
+    opacity: 1;
+}
+
+.nav-button {
+    padding: var(--nav-button-padding);
+    transition: var(--nav-button-transition);
+    opacity: var(--nav-button-opacity);
+    background-color: transparent;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    height: 100%;
+    cursor: pointer;
+    z-index: 10;
+    color: white;
+}
+
+.nav-button.prev {
+    background-image: var(--nav-button-bg-prev);
+    left: 0;
+}
+
+.nav-button.next {
+    background-image: var(--nav-button-bg-next);
+    right: 0;
+}
+
+.nav-button:hover {
+    opacity: var(--nav-button-opacity-hover);
+}
+
+.nav-button > svg {
+    height: var(--nav-button-icon-size);
+    width: var(--nav-button-icon-size);
+    color: currentColor;
+}
+
+.indicator-container {
+    gap: var(--indicator-gap);
+    position: absolute;
+    bottom: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+}
+
+.indicator {
+    height: var(--indicator-size);
+    width: var(--indicator-size);
+    background: var(--indicator-bg);
+    border-radius: 50%;
+}
+
+.indicator.active {
+    background: var(--indicator-active-bg);
+}
+
+.agent {
+    bottom: var(--agent-margin-bottom);
+    color: var(--agent-color);
+    left: var(--agent-margin-left);
+    font-size: var(--agent-font-size);
+    position: absolute;
+    margin: 0;
+}
+
+/* End Image Slider */
+
+.error-container {
+    grid-column: -1/1;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    justify-self: center;
+    align-self: center;
+}
+
+.error-container button {
+    padding: 8px 12px;
+    color: #ffffff;
+    background-color: indigo;
+    border: 0;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.error-container button:hover {
+    background-color: blueviolet;
 }

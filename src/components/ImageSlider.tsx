@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-import "../styles/image-slider.css";
+import Agent from "./Agent";
+import { Person } from "../utils/Types";
 
 interface ImageSliderProps {
   images: string[];
+  agent?: Person;
 }
 
-export default function ImageSlider({ images }: ImageSliderProps) {
+export default function ImageSlider({ images, agent }: ImageSliderProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const nextImage = () => {
@@ -29,7 +31,7 @@ export default function ImageSlider({ images }: ImageSliderProps) {
       <div className="image-wrapper">
         {images.map((image, index) => (
           <img
-            key={index}
+            key={image}
             src={image}
             alt={`Property ${index + 1}`}
             className={`image ${index === currentImageIndex ? "visible" : ""}`}
@@ -80,6 +82,15 @@ export default function ImageSlider({ images }: ImageSliderProps) {
           </button>
         </>
       ) : null}
+      {agent ? <Agent agent={agent} /> : null}
     </div>
   );
 }
+
+/**
+Unit tests
+
+test proper functionality (clicking next should show next image, when reaching end should show first one, prev previous image, when reaching 0 show the last one)
+test conditional rendering of agent
+text nav buttons are not there when only a single image
+*/
